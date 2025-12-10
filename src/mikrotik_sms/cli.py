@@ -45,6 +45,11 @@ def parse_args() -> argparse.Namespace:
         help="MQTT password (optional)",
     )
     parser.add_argument(
+        "--mqtt-password-file",
+        default=None,
+        help="Path to a file containing the MQTT password (safer than --mqtt-password).",
+    )
+    parser.add_argument(
         "--client-id",
         default="mikrotik-sms-gateway",
         help="MQTT client ID (default: mikrotik-sms-gateway)",
@@ -60,7 +65,17 @@ def make_mqtt_client(args: argparse.Namespace) -> mqtt.Client:
     )
 
     if args.mqtt_username is not None:
-        client.username_pw_set(args.mqtt_username, args.mqtt_password)
+        mqtt_password = args.mqtt_password
+
+        if mqtt_password is None and args.mqtt_password_file:
+            try:
+                with open(args.mqtt_password_file, "r", encoding="utf-8") as f:
+                    mqtt_password = f.read().strip()
+            except Exception as e:
+                print(f"Failed to read MQTT password file: {e}", file=sys.stderr)
+                sys.exit(1)
+
+        client.username_pw_set(args.mqtt_username, mqtt_password)
 
     connected_event = threading.Event()
     connect_result = {"ok": False, "reason": None}
