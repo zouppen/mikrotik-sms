@@ -1,7 +1,7 @@
 # mikrotik-sms
 
 A small utility that reads **MikroTik RouterOS SMS inbox** output in
-**terse mode**, extracts the **PDU**, decodes it using
+terse mode, extracts the **PDU**, decodes it using
 `smspdudecoder`, and publishes the fully decoded SMS as **JSON over
 MQTT**.
 
@@ -34,12 +34,26 @@ All Python dependencies are installed automatically when using `pip install`.
 
 ## Installation
 
-### Recommended: Install inside a virtual environment
+To install it inside a virtual environment:
 
-```bash
+```sh
 virtualenv env
 . env/bin/activate
 pip install -e .
+```
+
+## Usage
+
+```sh
+stdbuf -oL ssh \
+	-o ConnectTimeout=10 \
+	-o ServerAliveInterval=30 \
+    -o ServerAliveCountMax=3 \
+	-o BatchMode=yes \
+	user@mikrotik_ip \
+	/tool sms/inbox/print without-paging terse proplist=pdu | \
+	mikrotik-sms --mqtt-host MQTT_IP --mqtt-username MQTT_USER --mqtt-password MQTT_PW
+```
 
 ## License
 
