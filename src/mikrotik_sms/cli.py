@@ -66,12 +66,8 @@ def make_mqtt_client(args: argparse.Namespace) -> mqtt.Client:
     connect_result = {"ok": False, "reason": None}
 
     def on_connect(client, userdata, flags, reason_code, properties):
-        code_int = reason_code.value
-        if code_int == 0:
-            connect_result["ok"] = True
-        else:
-            connect_result["ok"] = False
-            connect_result["reason"] = reason_code
+        connect_result["ok"] = reason_code.value == 0
+        connect_result["reason"] = reason_code
         connected_event.set()
 
     client.on_connect = on_connect
