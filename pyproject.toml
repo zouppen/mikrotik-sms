@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mikrotik-sms"
+version = "0.1.0"
+description = "MikroTik SMS PDU decoder and MQTT publisher"
+readme = ""
+requires-python = ">=3.10"
+dependencies = [
+    "paho-mqtt>=2.0",
+    "smspdudecoder",
+]
+
+[project.scripts]
+mikrotik-sms = "mikrotik_sms.cli:main"
