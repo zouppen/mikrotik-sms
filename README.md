@@ -44,11 +44,11 @@ pip install -e .
 
 ## Usage
 
-First, reate SSH key using `ssh-keygen` on the host you want to run
+First, create SSH key using `ssh-keygen` on the host you want to run
 this project. Then, create a new user on Mikrotik and add the public
 SSH key to that user. See
 [MikroTik SSH documentation](https://help.mikrotik.com/docs/spaces/ROS/pages/132350014/SSH).
-Then run this tool (preferably in a systemd unit) by running:
+Then run this tool (preferably in a systemd unit). An example of how to invoke the whole shebang:
 
 ```sh
 stdbuf -oL ssh \
