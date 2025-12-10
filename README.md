@@ -1,0 +1,49 @@
+# mikrotik-sms
+
+A small utility that reads **MikroTik RouterOS SMS inbox** output in
+**terse mode**, extracts the **PDU**, decodes it using
+`smspdudecoder`, and publishes the fully decoded SMS as **JSON over
+MQTT**.
+
+This tool is intended to be used together with:
+
+- Mikrotik SSH command `/tool sms inbox print without-paging terse proplist=pdu follow-only`
+- A local MQTT broker such as **Mosquitto**
+- Consumers like **Node-RED**, **Home Assistant**, custom apps, etc.
+
+The program terminates immediately on:
+
+- MQTT authentication/connection failure at startup
+- Any MQTT publish error
+- Any non-empty input line that does not contain a valid `pdu=<hex>` field
+
+## Features
+
+- Parses message directly from PDU, enabling non-ASCII message payloads
+- Full GSM 03.40 decoding using `smspdudecoder`
+- MQTT v5 support with strict failure handling
+- JSON output with **Unix timestamps**
+
+## Requirements
+
+- Python **≥ 3.10**
+- `paho-mqtt ≥ 2.0`
+- `smspdudecoder`
+
+All Python dependencies are installed automatically when using `pip install`.
+
+## Installation
+
+### Recommended: Install inside a virtual environment
+
+```bash
+virtualenv env
+. env/bin/activate
+pip install -e .
+
+## License
+
+This project is released under the GNU General Public License v3.0, or
+(at your option) any later version.
+
+See [LICENSE].
