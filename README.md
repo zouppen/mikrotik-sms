@@ -44,6 +44,12 @@ pip install -e .
 
 ## Usage
 
+First, reate SSH key using `ssh-keygen` on the host you want to run
+this project. Then, create a new user on Mikrotik and add the public
+SSH key to that user. See
+[MikroTik SSH documentation](https://help.mikrotik.com/docs/spaces/ROS/pages/132350014/SSH).
+Then run this tool (preferably in a systemd unit) by running:
+
 ```sh
 stdbuf -oL ssh \
 	-o ConnectTimeout=10 \
