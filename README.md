@@ -51,7 +51,7 @@ stdbuf -oL ssh \
     -o ServerAliveCountMax=3 \
 	-o BatchMode=yes \
 	user@mikrotik_ip \
-	/tool sms/inbox/print without-paging terse proplist=pdu | \
+	/tool sms/inbox/print without-paging terse proplist=pdu follow-only | \
 	mikrotik-sms --mqtt-host MQTT_IP --mqtt-username MQTT_USER --mqtt-password MQTT_PW
 ```
 
