@@ -60,4 +60,4 @@ stdbuf -oL ssh \
 This project is released under the GNU General Public License v3.0, or
 (at your option) any later version.
 
-See [LICENSE].
+See [LICENSE file](LICENSE).
